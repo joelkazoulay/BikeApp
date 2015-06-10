@@ -2,8 +2,11 @@
 <html ng-app="app">
 <head lang="en">
     <meta charset="UTF-8">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="app.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
     <title></title>
 </head>
 
@@ -11,19 +14,42 @@
 <h1> {{"Bikes" + " Denver"}} </h1>
 {{data}} </br>
 
+Search: <input type="text" value="" ng-model="simpleFilter"><br>
+Sort by:
+<select ng-model="sortBy">
+    <option value="Name">Name</option>
+    <option value="Owner">Owner</option>
+    <option value="-Price">Price</option>
+    <option value="Date">Date</option>
+</select>
+<br><br>
+
 <form ng-submit="bikeCtrl.addBike(bikeCtrl.data)">
-    <input type="text" ng-model="bikeCtrl.data">
+Name:     <input type="text" ng-model="bikeCtrl.data.Name"> <br>
+Owner:    <input type="text" ng-model="bikeCtrl.data.Owner">
+Price:    <input type="number" ng-model="bikeCtrl.data.Price"> <br>
+Date:     <input type="text" ng-model="bikeCtrl.data.Date"> <br>
+
     <input type="submit" value="Add">
 </form>
 
-<table>
+<table class="table table-hover table-bordered">
     <thead>
     <tr>
-        <th>Bikes</th>
+        <th>Name</th>
+        <th>Owner</th>
+        <th>Price</th>
+        <th>Date</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="bike in bikeCtrl.bikes"><td>{{bike}}</td></tr>
+    <tr ng-repeat="bike in bikeCtrl.bikes | filter:simpleFilter | orderBy:sortBy">
+        <td>{{bike.Name}}</td>
+        <td>{{bike.Owner}}</td>
+        <td>{{bike.Price | currency:'USD$'}}</td>
+        <td>{{bike.Date | date:'EEEE, MMMM d yyyy'}}</td>
+
+    </tr>
     </tbody>
 </table>
 
