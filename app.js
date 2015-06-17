@@ -1,9 +1,11 @@
 angular
     .module('app',[])
+    .controller('bikesCtrl', BikesCtrl)
     .controller('addBikeCtrl', AddBikeCtrl)
-    .directive('directive', Directive);
+    .directive('headerBikes', HeaderBikes)
+    .directive('addBike', AddBike);
 
-function AddBikeCtrl(){
+function BikesCtrl(){
     var mod = this;
     mod.data = null;
     mod.bikes = [
@@ -26,13 +28,34 @@ function AddBikeCtrl(){
             Date: '2014-04-21'
         }
     ];
-
-
-    mod.addBike = function(data){
-        mod.bikes.push(data);
-        mod.data = null;
-    };
 }
 
-function Directive(){
+
+
+function HeaderBikes(){
+    return {
+        restrict:'EA',
+        templateUrl: 'templates/bikeheader.html'
+    }
+}
+
+function AddBike(){
+    return{
+        restrict: 'E',
+        templateUrl: 'templates/addbike.html',
+        controller: 'addBikesCtrl',
+        controllerAs: 'ctrl',
+        bindToController: true,
+        scope: {
+            bikes: '='
+        }
+    }
+}
+
+function AddBikeCtrl(){
+    var ctrl = this;
+    ctrl.addBike = function(data){
+        ctrl.bikes.push(data);
+        ctrl.data = null;
+    };
 }

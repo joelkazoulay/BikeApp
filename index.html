@@ -10,7 +10,9 @@
     <title></title>
 </head>
 
-<body ng-controller="addBikeCtrl as bikeCtrl">
+<div header-bikes></div>
+
+<body ng-controller="bikesCtrl as bikeCtrl">
 <h1> {{"Bikes" + " Denver"}} </h1>
 {{data}} </br>
 
@@ -23,15 +25,6 @@ Sort by:
     <option value="Date">Date</option>
 </select>
 <br><br>
-
-<form ng-submit="bikeCtrl.addBike(bikeCtrl.data)">
-Name:     <input type="text" ng-model="bikeCtrl.data.Name"> <br>
-Owner:    <input type="text" ng-model="bikeCtrl.data.Owner">
-Price:    <input type="number" ng-model="bikeCtrl.data.Price"> <br>
-Date:     <input type="text" ng-model="bikeCtrl.data.Date"> <br>
-
-    <input type="submit" value="Add">
-</form>
 
 <table class="table table-hover table-bordered">
     <thead>
@@ -46,12 +39,15 @@ Date:     <input type="text" ng-model="bikeCtrl.data.Date"> <br>
     <tr ng-repeat="bike in bikeCtrl.bikes | filter:simpleFilter | orderBy:sortBy">
         <td>{{bike.Name}}</td>
         <td>{{bike.Owner}}</td>
-        <td>{{bike.Price | currency:'USD$'}}</td>
+        <td>{{bike.Price | currency}}</td>
         <td>{{bike.Date | date:'EEEE, MMMM d yyyy'}}</td>
 
     </tr>
     </tbody>
 </table>
+</br>
+
+<add-bike bikes="bikeCtrl.bikes"></add-bike>
 
 </body>
 
